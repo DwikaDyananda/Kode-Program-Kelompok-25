@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+float absen(float absensi){
+	float hitung_absen = (absensi/15*100)*0.05;
+	
+	return hitung_absen;
+}
+
+float tugas(float tugas1, float tugas2, float tugas3){
+	float hitung_tugas = (tugas1 + tugas2 + tugas3)*0.2/3;
+	
+	return hitung_tugas;
+}
+
+float quiz(float nilaiQuiz){
+	float hasil_quiz = nilaiQuiz*0.15;
+	
+	return hasil_quiz;
+}
+
+float uts(float nilaiUTS){
+	float hasil_uts = nilaiUTS*0.3;
+	
+	return hasil_uts;
+}
+
+float uas(float nilaiUAS){
+	float hasil_uas = nilaiUAS*0.3;
+	
+	return hasil_uas;
+}
+
+void nilai_akhir(float absensi, float quiz1, float tugas1, float tugas2, float tugas3, float uts1, float uas1){
+	float nilaiAngka;
+	char nilaiHuruf[2];
+	
+	nilaiAngka = absen(absensi)+tugas(tugas1, tugas2, tugas3)+quiz(quiz1)+uts(uts1)+uas(uas1);
+	
+	if(nilaiAngka<=100 && nilaiAngka>=80){
+		strcpy(nilaiHuruf, "A");
+	}else if(nilaiAngka<80 && nilaiAngka>=75){
+		strcpy(nilaiHuruf, "B+");
+	}else if(nilaiAngka<75 && nilaiAngka>=65){
+		strcpy(nilaiHuruf, "B");
+	}else if(nilaiAngka<65 && nilaiAngka>=60){
+		strcpy(nilaiHuruf, "C+");
+	}else if(nilaiAngka<60 && nilaiAngka>=55){
+		strcpy(nilaiHuruf, "C");
+	}else if(nilaiAngka<55 && nilaiAngka>=50){
+		strcpy(nilaiHuruf, "D+");
+	}else if(nilaiAngka<50 && nilaiAngka>=45){
+		strcpy(nilaiHuruf, "D");
+	}else if(nilaiAngka<45 && nilaiAngka>=0){
+		strcpy(nilaiHuruf, "E");
+	}
+	
+	printf("\nNilai Angka : %.2f", nilaiAngka);
+	printf("\nNilai Huruf : %s\n\n", nilaiHuruf);
+}
+
+float masukan(){
+    float select;
+    char enter;
+
+	scanf("%f%c", &select, &enter);
+	if (enter!='\n'){
+        getchar();
+        printf("Masukkan angka : ");
+        return masukan();
+
+    }else if (select<0 || select>100){
+		printf("Inputan salah, coba lagi : ");
+        return masukan();
+        
+    }else{
+        return select;
+    }
+}
+
+float masukan2(){
+    float input;
+    char enter;
+
+	scanf("%f%c", &input, &enter);
+	if (enter!='\n'){
+        getchar();
+        printf("Masukkan angka : ");
+        return masukan2();
+
+    }else if (input<0 || input>15){
+		printf("Inputan salah, coba lagi : ");
+        return masukan2();
+        
+    }else{
+        return input;
+    }
+}
+
+void profil(){
+	printf("=====================================================\n");
+	printf("|            PROGRAM MENGHITUNG NILAI AKHIR         |\n");
+	printf("|                     KELOMPOK 25                   |\n");
+	printf("=====================================================\n");
+	printf("| 2105551010 MARIA CHRISTINA HARTONO                |\n");
+	printf("| 2105551074 I MADE DWIKA DYANANDA KUMARA           |\n");
+	printf("| 2105551081 I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA |\n");
+	printf("| 2105551134 ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    |\n");
+	printf("| 2105551139 I GUSTI AGUNG BAGUS DHAMADI WIBAWA     |\n");
+	printf("| 2105551156 NI MADE RANTINI                        |\n");
+	printf("=====================================================\n");
+	
+}
+
+
+int main(){
+	
+	float absensi;
+	float nilai_tugas1, nilai_tugas2, nilai_tugas3;   	
+	float nilai_quiz;									
+	float nilai_uts, nilai_uas; 						
+	int pilihan;
+	
+	do{
+		profil();
+		
+		printf("\nMasukkan banyak kehadiran (maks.15): ");
+		absensi=masukan2();
+	
+		if(absensi==0){
+			printf("\nNilai Angka: 0\n");
+			printf("Nilai Huruf : E\n\n");
+			
+		}else{
+			printf("\nTugas\n");
+			printf("Nilai Tugas 1 : ");
+			nilai_tugas1=masukan();
+			printf("Nilai Tugas 2 : ");
+			nilai_tugas2=masukan();
+			printf("Nilai Tugas 3 : ");
+			nilai_tugas3=masukan();
+	
+			printf("\nNilai Quiz : ");
+			nilai_quiz=masukan();
+	
+			printf("Nilai UTS : ");
+			nilai_uts=masukan();
+			printf("Nilai UAS : ");
+			nilai_uas=masukan();
+			
+			nilai_akhir(absensi, nilai_tugas1, nilai_tugas2, nilai_tugas3, nilai_quiz, nilai_uts, nilai_uas);
+			printf("");
+		}
+		
+		do{
+			printf("\nApakah Anda ingin mengulang program? (1 = Ya, 2 = Tidak) : ");
+			scanf("%d", &pilihan);
+		}while(pilihan!=1 && pilihan!=2);
+		
+		system("cls");
+		
+	}while(pilihan==1);
+	
+	
+	printf("=========================\n");
+	printf("|                       |\n");
+	printf("|      Terima kasih     |\n");
+	printf("|                       |\n");
+	printf("=========================\n\n");
+	
+	return 0;  //FIXX
+}
