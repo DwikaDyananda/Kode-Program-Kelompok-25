@@ -1,0 +1,155 @@
+#include <stdio.h>
+
+float angsuranPokok(float pokok, int lama_pinjam){
+	float angsur = pokok/lama_pinjam;
+	
+	return angsur;
+}
+
+void bunga_dan_angsuran(float pokok, int lama_pinjam, float bunga_setahun){
+	float bunga_bulan_ke;
+	int bulan_ke;
+	float angsur_perbulan;
+	float total_bunga, total_angsuran;
+	
+	for(bulan_ke = 0; bulan_ke<=lama_pinjam;){
+		bulan_ke = bulan_ke + 1;
+	}
+	
+	for(bulan_ke=1; bulan_ke<=lama_pinjam; bulan_ke++){
+		bunga_bulan_ke=(pokok - ((bulan_ke-1)*angsuranPokok(pokok, lama_pinjam))) * bunga_setahun/100/12;
+		printf("\n|Bulan %d = Rp%.2f\t", bulan_ke, bunga_bulan_ke);
+		
+		if(bunga_bulan_ke > 0){
+			total_bunga = total_bunga + bunga_bulan_ke;
+		}
+		
+		angsur_perbulan = angsuranPokok(pokok, lama_pinjam) + bunga_bulan_ke;
+		printf("     Rp%.2f\t", angsur_perbulan);
+		
+		if(angsur_perbulan > 0){
+			total_angsuran = total_angsuran + angsur_perbulan;
+		}
+		printf("\t   Rp%.2f\n", angsuranPokok(pokok, lama_pinjam));
+		printf("|");
+	}
+	
+	printf("\n|________________________________________________________________|\n");
+	printf("|                                                                |\n");
+	printf("|Total Bunga    = Rp%.2f\n", total_bunga);
+	printf("|Total Angsuran = Rp%.2f", total_angsuran);
+	printf("\n|________________________________________________________________|\n");
+	
+}
+
+float masukan(){
+    float input;
+    char enter;
+
+	scanf("%f%c", &input, &enter);
+	if(enter != '\n'){
+        getchar();
+        printf("|Masukkan angka : ");
+        return masukan();
+
+    }else if(input<=0){
+		printf("|Inputan salah, coba lagi : ");
+        return masukan();
+        
+    }else{
+        return input;
+    }
+}
+
+float masukan2(){
+    float input;
+    char enter;
+
+	scanf("%f%c", &input, &enter);
+	if(enter != '\n'){
+        getchar();
+        printf("|Masukkan angka : ");
+        return masukan2();
+
+	}else if(input>0 && input<100000){
+		printf("|Pinjaman minimal Rp100.000 : ");
+		return masukan2();
+	
+    }else if(input<=0){
+		printf("|Inputan salah, coba lagi : ");
+        return masukan2();
+        
+    }else{
+        return input;
+    }
+}
+
+void profil(){
+	printf("=====================================================\n");
+	printf("|        PROGRAM MENGHITUNG BUNGA & ANGSURAN        |\n");
+	printf("|                     KELOMPOK 25                   |\n");
+	printf("=====================================================\n");
+	printf("| 2105551010 MARIA CHRISTINA HARTONO                |\n");
+	printf("| 2105551074 I MADE DWIKA DYANANDA KUMARA           |\n");
+	printf("| 2105551081 I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA |\n");
+	printf("| 2105551134 ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    |\n");
+	printf("| 2105551139 I GUSTI AGUNG BAGUS DHAMADI WIBAWA     |\n");
+	printf("| 2105551156 NI MADE RANTINI                        |\n");
+	printf("=====================================================\n");
+	
+}
+
+
+int main(){
+	
+	float pokok_pinjam, bulan_pinjam; 
+	float bunga, bunga_menurun;
+	float angsuran_perbulan, angsuran_pokok;
+	int pilihan;
+	
+	do{
+	
+		profil();
+		
+		printf("\n\n\n _______________________________________________________________\n");	
+		printf("|                                                               |");
+		
+		printf("\n|Pokok Pinjaman        :"); 
+		pokok_pinjam = masukan2();
+		printf("|Bunga (%%)             :"); 
+		bunga = masukan();
+		printf("|Lama Pinjaman (bulan) :"); 
+		bulan_pinjam = masukan();
+		printf("|_______________________________________________________________|");
+		
+		printf("\n ________________________________________________________________\n");
+		printf("|                                                                |");
+		printf("\n|\tBunga\t");
+		printf("\tAngsuran per bulan\t");
+		printf("Angsuran pokok\t |");
+		printf("\n|________________________________________________________________|\n");
+		printf("|");
+		bunga_dan_angsuran(pokok_pinjam, bulan_pinjam, bunga); 
+		
+		do{
+			printf("\nApakah Anda ingin mengulang program? (1 = Ya, 2 = Tidak) : ");
+			pilihan=masukan();
+			
+			if(pilihan != 1 && pilihan != 2){
+				printf("|Pilihan tidak tersedia, coba lagi.\n\n");
+			}
+		}while(pilihan != 1 && pilihan != 2);
+		
+		system("cls");
+		
+	}while(pilihan == 1);
+	
+	printf("=========================\n");
+	printf("|                       |\n");
+	printf("|      Terima kasih     |\n");
+	printf("|                       |\n");
+	printf("=========================\n");
+		
+	
+	return 0;  //FIX
+}
