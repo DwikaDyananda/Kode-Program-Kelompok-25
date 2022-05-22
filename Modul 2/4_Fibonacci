@@ -1,0 +1,199 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void coverRekursif(){
+	printf("\n============================\n");
+	printf("|      Deret Fibonacci     |\n");
+	printf("|      Metode Rekursif     |\n");
+	printf("============================\n");
+}
+
+void coverIteratif(){
+	printf("\n============================\n");
+	printf("|      Deret Fibonacci     |\n");
+	printf("|      Metode Iteratif     |\n");
+	printf("============================\n");
+}
+
+int rekursif(int deret) {
+    if(deret == 0 || deret == 1){
+    	return deret; 
+    	
+	}else{
+    	return rekursif(deret-1) + rekursif(deret-2);
+	}    
+}
+
+void iteratif(int n){
+	int d1 = 0, d2 = 1;
+	int deret = 0, deretan;
+	
+	do{
+	   	//1. deretan = 0 + 1 = 1
+	  	//2. deretan = 1 + 1 = 2
+		//3. deretan = 1 + 2 = 3
+	   	deretan = d1 + d2;
+	   	if(deret == 0){
+	    	printf("*|Deret ke-1: %d \n", d1);
+	    }else if(deret == 1){
+	   		printf("*|Deret ke-2: %d \n", d2);
+		}else{
+			printf("*|Deret ke-%d: %d \n", deret+1, deretan);
+					
+			d1 = d2;
+			d2 = deretan;
+		}
+		deret++;
+		
+	}while(deret<n);	
+	
+}
+
+int masukan(){
+    int input;
+    char enter;
+
+	scanf("%d%c", &input, &enter);
+	if (enter != '\n'){
+        getchar();
+        printf("|Masukkan angka : ");
+        return masukan();
+
+    }else if (input <= 0){
+		printf("|Inputan salah, coba lagi : ");
+        return masukan();
+
+	}else{
+        return input;
+    }
+}
+
+int masukan2(){
+    int input;
+    char enter;
+
+	scanf("%d%c", &input, &enter);
+	if (enter != '\n'){
+        getchar();
+        printf("|Masukkan angka : ");
+        return masukan2();
+
+    }else if (input <= 0){
+		printf("|Inputan salah, coba lagi : ");
+        return masukan2();
+    
+	}else if(input > 3){
+		printf("|Menu tidak tersedia. Coba lagi : ");
+		return masukan2();
+		
+	}else{
+        return input;
+    }
+}
+
+void profil(){
+	printf("======================================================\n");
+	printf("|           PROGRAM DERET BILANGAN FIBONACCI         |\n");
+	printf("|                     KELOMPOK 25                    |\n");
+	printf("======================================================\n");
+	printf("| 2105551010 MARIA CHRISTINA HARTONO                 |\n");
+	printf("| 2105551074 I MADE DWIKA DYANANDA KUMARA            |\n");
+	printf("| 2105551081 I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA  |\n");
+	printf("| 2105551134 ANAK AGUNG LINGGA PRATYAKSA NUGRAHA     |\n");
+	printf("| 2105551139 I GUSTI AGUNG BAGUS DHAMADI WIBAWA      |\n");
+	printf("| 2105551156 NI MADE RANTINI                         |\n");
+	printf("======================================================\n");
+	
+}
+
+
+
+int main(){
+    int i, menu;
+    int nDeret;
+    int pilihan;
+    
+    do{
+	  	profil();
+	  	
+	    printf("\n=======================\n");
+		printf("|         Menu:       |\n");
+		printf("=======================\n");
+		printf("|1. Metode Rekursif   |\n");
+		printf("|2. Metode Iteratif   |\n");
+		printf("|3. Keluar            |\n");
+		printf("=======================\n\n");
+		
+		printf(" _______________________________________\n");
+		printf("|\n");
+		printf("|Masukkan menu: ");	
+		menu=masukan2();
+		printf("|_______________________________________\n");
+		
+		system("cls");
+	    
+	    if(menu == 1){
+		    coverRekursif();
+		    
+		    printf(" _____________________________\n");
+			printf("|                             |\n");
+		   	printf("|Masukkan jumlah deret: ");
+		   	nDeret=masukan();
+		   	printf("|_____________________________|\n\n");
+		   	
+		   	if(nDeret==0){
+		   		printf("\nTidak ada deret bilangan fibonacci\n\n");
+			}else{
+				printf("\nDeret bilangan fibonacci (mulai dari 0)\n");
+				printf("-----------------------------------------\n");
+		   		for(i = 0; i<nDeret; i++){
+		      	 	printf("*|Deret ke-%d: %d \n", i+1, rekursif(i));
+		   		}  
+		   		printf("-----------------------------------------\n\n");
+			}
+			
+		}else if(menu == 2){
+			coverIteratif();
+			
+			printf(" _____________________________\n");
+			printf("|                             |\n");
+		   	printf("|Masukkan jumlah deret:");
+		   	nDeret=masukan();
+		   	printf("|_____________________________|\n\n");
+		   	
+	    	printf("\nDeret bilangan fibonacci (mulai dari 0)\n");
+			printf("-----------------------------------------\n");
+	    	iteratif(nDeret);
+	    	printf("-----------------------------------------\n\n");
+	    	
+		}else if(menu == 3){
+			printf("=========================\n");
+	        printf("|                       |\n");
+	        printf("|      Terima kasih     |\n");
+         	printf("|                       |\n");
+	        printf("=========================\n\n");
+			
+			exit(0);	
+		}
+	
+		do{
+			printf("\nApakah Anda ingin mengulang program? (1 = Ya, 2 = Tidak) : ");
+			pilihan=masukan();
+			
+			if(pilihan != 1 && pilihan != 2){
+				printf("|Pilihan tidak tersedia, coba lagi.\n\n");
+			}
+		}while(pilihan != 1 && pilihan != 2);
+		
+		system("cls");
+		
+	}while(pilihan == 1);
+	
+	printf("=========================\n");
+	printf("|                       |\n");
+	printf("|      Terima kasih     |\n");
+	printf("|                       |\n");
+	printf("=========================\n\n");
+    
+    return 0;  //FIXX
+}
