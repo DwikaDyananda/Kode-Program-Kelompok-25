@@ -1,0 +1,217 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void desbin(){
+	printf("\n=================================\n");
+	printf("|                               |\n");
+	printf("|         DESIMAL -> BINER      |\n");
+	printf("|                               |\n");
+	printf("=================================\n");
+}
+
+void bindes(){
+	printf("\n=================================\n");
+	printf("|                               |\n");
+	printf("|         BINER -> DESIMAL      |\n");
+	printf("|                               |\n");
+	printf("=================================\n");
+}
+
+int desBin(int angka1){
+	int sisa;
+	int bantu = 1, biner = 0;
+	
+	while(angka1>0){
+        sisa = angka1 % 2;
+        biner = biner + (sisa*bantu);
+        angka1 = angka1/2;
+        bantu = bantu*10;
+    }
+	
+	return biner;
+}
+
+int binDes(int angka2){
+	int i;
+	int desimal, sisa;
+	
+	i=1;
+	desimal=0;
+	
+	while(angka2!=0){
+      sisa = angka2 % 10;
+      desimal = desimal + (sisa*i);
+      i = i*2;
+      angka2 = angka2/10;
+    }
+    
+    return desimal;
+}
+
+int masukan(){
+    int input;
+    char enter;
+
+	scanf("%d%c", &input, &enter);
+	if(enter != '\n'){
+        getchar();
+        printf("|Masukkan angka : ");
+        return masukan();
+
+    }else if(input <= 0){
+		printf("|Inputan salah, silakan coba lagi : ");
+        return masukan();
+
+	}else{
+        return input;
+    }
+}
+
+int masukan2(){
+    int input;
+    char enter;
+
+	scanf("%d%c", &input, &enter);
+	if(enter != '\n'){
+        getchar();
+        printf("|Masukkan angka : ");
+        return masukan2();
+
+    }else if(input<=0){
+		printf("|Inputan salah, coba lagi : ");
+        return masukan2();
+    
+	}else if(input>3){
+		printf("|Menu tidak tersedia. Masukkan menu : ");
+		return masukan2();
+		
+	}else{
+        return input;
+    }
+}
+
+int masukan3(){
+    int input;
+    char enter;
+
+	scanf("%d%c", &input, &enter);
+	if(enter != '\n'){
+        getchar();
+        printf("|Masukkan angka : ");
+        return masukan3();
+
+    }else if(input != 0 & 1 ){
+		printf("|Inputan salah, silakan coba lagi : ");
+        return masukan3();
+	
+	}else{
+        return input;
+    }
+}
+
+void profil(){
+	printf("=====================================================\n");
+	printf("|              PROGRAM KONVERSI BILANGAN            |\n");
+	printf("|                     KELOMPOK 25                   |\n");
+	printf("=====================================================\n");
+	printf("| 2105551010 MARIA CHRISTINA HARTONO                |\n");
+	printf("| 2105551074 I MADE DWIKA DYANANDA KUMARA           |\n");
+	printf("| 2105551081 I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA |\n");
+	printf("| 2105551134 ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    |\n");
+	printf("| 2105551139 I GUSTI AGUNG BAGUS DHAMADI WIBAWA     |\n");
+	printf("| 2105551156 NI MADE RANTINI                        |\n");
+	printf("=====================================================\n");
+}
+
+
+
+int main(){
+	int bilDesimal, bilBiner;
+	int hasilBiner, hasilDesimal;
+   	int menu;
+   	int pilihan;
+   	
+   	do{
+		profil();
+		
+   		printf("\n========================\n");
+		printf("|          Menu:       |\n");
+		printf("========================\n");
+		printf("|1. Desimal ke Biner   |\n");
+		printf("|2. Biner ke Desimal   |\n");
+		printf("|3. Keluar             |\n");
+		printf("========================\n\n");
+	
+		printf(" __________________\n");
+		printf("|                  |\n");
+		printf("|Masukkan menu: ");	
+		menu=masukan2();
+		printf("|__________________|\n");
+		
+		system("cls");
+	
+		if(menu == 1){
+			profil();
+			desbin();
+			
+			printf(" ____________________________\n");
+			printf("|                            |\n");
+			printf("|Masukan bilangan desimal : ");
+    		bilDesimal=masukan();
+    		printf("|____________________________|\n");
+			
+			hasilBiner = desBin(bilDesimal);
+			
+			printf(" ______________________________________\n");
+			printf("|                                      |\n");
+			printf("|Bilangan biner dari %d = %d\n", bilDesimal, hasilBiner);
+			printf("|______________________________________|\n");
+			
+		}else if(menu == 2){
+			profil();
+			bindes();
+			
+			printf(" ____________________________\n");
+			printf("|                            |\n");
+			printf("|Masukan bilangan biner : ");    
+    		bilBiner=masukan3();
+    		printf("|____________________________|\n");
+			
+			hasilDesimal = binDes(bilBiner);
+			
+			printf(" ____________________________________________\n");
+			printf("|                                            |\n");
+			printf("|Bilangan desimal dari %d = %d\n", bilBiner, hasilDesimal);
+			printf("|____________________________________________|\n");
+			
+		}else if(menu == 3){
+			printf("=========================\n");
+	        printf("|                       |\n");
+	        printf("|      Terima kasih     |\n");
+	        printf("|                       |\n");
+	        printf("=========================\n");
+	        
+	        exit(0);
+		}
+		
+		do{
+			printf("\nApakah Anda ingin mengulang program? (1 = Ya, 2 = Tidak) : ");
+			pilihan=masukan();
+			
+			if(pilihan != 1 && pilihan != 2){
+				printf("|Pilihan tidak tersedia, coba lagi.\n\n");
+			}
+		}while(pilihan!=1 && pilihan!=2);
+		
+		system("cls");
+    
+	}while(pilihan==1);
+	
+	printf("=========================\n");
+	printf("|                       |\n");
+	printf("|      Terima kasih     |\n");
+	printf("|                       |\n");
+	printf("=========================\n");
+    
+    return 0;  //FIXX
+}
