@@ -1,1 +1,374 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <math.h>
+#include <conio.h>
+#include <windows.h>
+#include <unistd.h>
 
+
+clock_t awal,akhir,detik;
+double durasi[2];
+int x, y, n, temp;
+
+int valid_input();
+int valid_menu();
+void menu();
+void kelompok();
+char exite();
+void seribu();
+void enambelas();
+void enamempat();
+
+
+int main(){
+    int menu1;
+    char karakter;
+    kelompok();
+    do{
+        system("cls");
+        fflush (stdin);
+        menu();
+        printf("\t\t|silahkan untuk memasukan pilihan menu : ");
+        menu1=valid_menu();
+        printf("\n\n");
+    if(menu1==1){
+        seribu();
+    }else if(menu1==2){
+        enambelas();
+    }else if(menu1==3){
+        enamempat();
+    }else{
+    	system("cls");
+        printf("\t\t|Terimakasi");
+        return 0;
+    }printf("\n\t\t----------------------------------------------------\n");
+        printf("\n\t\t|Tekan y Jika Ingin Kembali Ke Menu Awal\n\t\t|Tekan n Jika Ingin Keluar dari Program\n");
+        printf("\t\t|Silahkan Masukan Pilihan [Y/N] : ");
+        karakter=exite();
+    }while(karakter=='y'|| karakter=='Y');
+    system("cls");
+    return 0;
+
+}
+
+//=====================================================================================================================
+int valid_menu(){
+    int cek;
+    cek=valid_input();
+    if(cek >=1 && cek <=4){
+        return cek;
+    }else{
+        printf("\t\tcoba lagi! : ");
+    }
+    return valid_menu();
+}
+//=======================================================================================================================
+int valid_input(){
+    char masukan[100];
+    int i = 0;
+    int isi_depan = 0;
+    int status = 0;
+    int titik = 0;
+    int salah = 0;
+    int minus = 0;
+    int hasil;
+    scanf("%[^\n]", &masukan);
+    fflush(stdin);
+    while(masukan[i] != '\0'){
+        if(masukan[i] == '.'){
+            salah = 1;
+            masukan[i] = '\0';
+        }else if(masukan[i] == ' '){
+            salah = 1;
+            masukan[i] = '\0';
+        }else if(masukan[i]>='0' && masukan[i]<='9' ||  masukan[0] == '-'){
+            if(masukan[i] == '-'){
+                minus=minus + 1;
+                if(minus >1 || masukan[i+1]=='\0'){
+                    salah=1;
+                    masukan[i]='\0';
+                }
+            }else if(masukan[i]>='0' && masukan[i]<='9'){
+                if(masukan[0]=='0'){
+                    salah=1;
+                    masukan[i]='\0';
+                }else{
+                    isi_depan = (isi_depan * 10) + (masukan[i] - 48);
+                }
+            }else{
+                salah=1;
+                masukan[i]='\0';
+            }
+            i++;
+        }else{
+            salah = 1;
+            masukan[i] = '\0';
+        }
+        // a1hj
+    }//end while
+    if(masukan[0]=='\0'){
+        salah=1;
+    }
+    hasil = isi_depan;
+    if(minus == 1){
+        hasil = hasil - (hasil * 2);
+    }
+    if(salah == 1){
+        printf("\t\ttidak valid!,coba lagi!: ");
+    }else{
+        return hasil;
+    }
+return valid_input();
+}
+
+char exite (){
+    char masukan[100];
+    while(1){
+        int i=0;
+        int salah;
+        scanf("%[^\n]",&masukan);
+        fflush(stdin);
+        if(masukan [i+1] =='\0'){
+            if(masukan[0]=='y'  || masukan[0]=='Y' && masukan[1]=='\0'){
+                return masukan[0];
+            }else if (masukan[0]=='n'  || masukan [0]=='N' && masukan[1]=='\0'){
+                return masukan[0];
+            }else{
+                salah=1;
+            }
+        }
+        salah=1;
+        if(salah==1){
+            printf("\t\ttidak valid!,coba lagi! :");
+        }
+    }
+}
+
+//=======================================================================================================================
+
+void kelompok(){
+    printf("\t\t\t-------------PRAKTIKUM ALPROG MODUL 3 NOMOR 4 DISUSUN OLEH KELOMPOK 25------------------\n");
+    printf("\t\t\t|1. 2105551010 		MARIA CHRISTINA HARTONO                         		|\n");
+    printf("\t\t\t|2. 2105551074 		I MADE DWIKA DYANANDA KUMARA                    		|\n");
+    printf("\t\t\t|3. 2105551081		I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA           		|\n");
+    printf("\t\t\t|4. 2105551134 		ANAK AGUNG LINGGA PRATYAKSA NUGRAHA             		|\n");
+    printf("\t\t\t|5. 2105551139 		I GUSTI AGUNG BAGUS DHAMADI WIBAWA                 		|\n");
+    printf("\t\t\t|6. 2105551156 		NI MADE RANTINI                                 		|\n");
+    printf("\t\t\t----------------------------------------------------------------------------------------\n");
+    printf("\t\t\t|tekan sesuatu untuk melanjutkan . . . .");
+    getch();
+}
+
+void menu(){
+    printf("\t\t|------------PROGRAM PENGURUTAN BILANGAN DENGAN METODE BUBLE S0RTING------------\n");
+    printf("\t\t|\t1. 1000 DATA ACAK                                                          |\n");
+    printf("\t\t|\t2. 16000 DATA ACAK                                                         |\n");
+    printf("\t\t|\t3. 64000 DATA ACAK                                                         |\n");
+    printf("\t\t|\t4. KELUAR DARI PROGRAM                                                   |\n");
+    printf("\t\t|--------------------------------------------------------------------------------\n");
+}
+
+//=============================================================================================================================
+void seribu(){
+    int a1[1000], a2[1000];
+    int q;
+    int j=20;
+    n = 1000;
+    srand((unsigned) time(NULL));
+    for(x=0; x<n; x++){
+		a1[x] = rand();
+		a2[x] = a1[x];
+	}
+    printf("\n\n\n\t\t|===========================================================|\n");
+	int *pa2 = a2;
+
+//===========================================================================
+    awal=clock();   //waktu awal cara biasa
+//===========================================================================
+	for(x=0; x<n-1; x++)
+    {
+		for(y=0; y<n-1-x; y++)
+		{
+			if(a1[y] > a1[y+1])
+			{
+				temp = a1[y];
+				a1[y] = a1[y+1];
+				a1[y+1] = temp;
+			}
+		}
+	}
+//===========================================================================
+	akhir=clock();  //waktu akhir cara biasa
+//===========================================================================
+    detik= akhir-awal;
+    durasi[0] = (double)(detik) / CLOCKS_PER_SEC;
+
+
+//===========================================================================
+    awal =clock();  //waktu awal cara pointer
+//===========================================================================
+	for(x=0; x<n-1; x++)
+    {
+		for(y=0; y<n-1-x; y++)
+		{
+			if(*(pa2+y) > *(pa2+y+1))
+			{
+				temp = *(pa2+y);
+				*(pa2+y) = *(pa2+y+1);
+				*(pa2+y+1) = temp;
+			}
+		}
+	}
+//===========================================================================
+	akhir=clock(); //waktu akhir cara pointer
+//===========================================================================
+	detik= akhir - awal;
+	durasi[1] = (double)(detik) / CLOCKS_PER_SEC;
+
+	printf("\n\n");
+    printf("\t\t======================================================\n");
+    printf("\t\t|\tBUBLE SORTING 1000 DATA ACAK                 |\n");
+	printf("\t\t======================================================\n");
+	printf("\t\t|Waktu Yang Dibutuhkan                               |\n");
+	printf("\t\t======================================================\n");
+	printf("\t\t|Durasi waktu Cara biasa   : %f detik          |\n", durasi[0]);
+	printf("\t\t|Durasi waktu cara Pointer : %f detik          |\n", durasi[1]);
+	printf("\t\t======================================================\n");
+}
+//==================================================================================================================================
+void enambelas(){
+    int a1[16000], a2[16000];
+    int q;
+    int j=20;
+    n = 16000;
+    srand((unsigned) time(NULL));
+    for(x=0; x<n; x++){
+		a1[x] = rand();
+		a2[x] = a1[x];
+	}
+	int *pa2 = a2;
+
+//===========================================================================
+    awal=clock();   //waktu awal cara biasa
+//===========================================================================
+	for(x=0; x<n-1; x++)
+    {
+		for(y=0; y<n-1-x; y++)
+		{
+			if(a1[y] > a1[y+1])
+			{
+				temp = a1[y];
+				a1[y] = a1[y+1];
+				a1[y+1] = temp;
+			}
+		}
+	}
+//===========================================================================
+	akhir=clock();  //waktu akhir cara biasa
+//===========================================================================
+    detik= akhir-awal;
+    durasi[0] = (double)(detik) / CLOCKS_PER_SEC;
+
+
+//===========================================================================
+    awal = clock();  //waktu awal cara pointer
+//===========================================================================
+	for(x=0; x<n-1; x++)
+    {
+		for(y=0; y<n-1-x; y++)
+		{
+			if(*(pa2+y) > *(pa2+y+1))
+			{
+				temp = *(pa2+y);
+				*(pa2+y) = *(pa2+y+1);
+				*(pa2+y+1) = temp;
+			}
+		}
+	}
+//===========================================================================
+	akhir=clock(); //waktu akhir cara pointer
+//===========================================================================
+	detik= akhir - awal;
+	durasi[1] = (double)(detik) / CLOCKS_PER_SEC;
+
+	printf("\n\n");
+    printf("\t\t======================================================\n");
+    printf("\t\t|\tBUBLE SORTING 16000 DATA ACAK                |\n");
+	printf("\t\t======================================================\n");
+	printf("\t\t|Waktu Yang Dibutuhkan                               |\n");
+	printf("\t\t======================================================\n");
+	printf("\t\t|Durasi waktu Cara biasa   : %f detik          |\n", durasi[0]);
+	printf("\t\t|Durasi waktu cara Pointer : %f detik          |\n", durasi[1]);
+	printf("\t\t======================================================\n");
+}
+
+//============================================================================================================================
+
+void enamempat(){
+    int a1[64000], a2[64000];
+    int q;
+    int j=16;
+    n = 64000;
+    srand((unsigned) time(NULL));
+    for(x=0; x<n; x++){
+		a1[x] = rand();
+		a2[x] = a1[x];
+	}
+
+	int *pa2 = a2;
+
+//===========================================================================
+    awal=clock();   //waktu awal cara biasa
+//===========================================================================
+	for(x=0; x<n-1; x++)
+    {
+		for(y=0; y<n-1-x; y++)
+		{
+			if(a1[y] > a1[y+1])
+			{
+				temp = a1[y];
+				a1[y] = a1[y+1];
+				a1[y+1] = temp;
+			}
+		}
+	}
+//===========================================================================
+	akhir=clock();  //waktu akhir cara biasa
+//===========================================================================
+    detik= akhir-awal;
+    durasi[0] = (double)(detik) / CLOCKS_PER_SEC;
+
+
+//===========================================================================
+    awal = clock();  //waktu awal cara pointer
+//===========================================================================
+	for(x=0; x<n-1; x++)
+    {
+		for(y=0; y<n-1-x; y++)
+		{
+			if(*(pa2+y) > *(pa2+y+1))
+			{
+				temp = *(pa2+y);
+				*(pa2+y) = *(pa2+y+1);
+				*(pa2+y+1) = temp;
+			}
+		}
+	}
+//===========================================================================
+	akhir=clock(); //waktu akhir cara pointer
+//===========================================================================
+	detik= akhir - awal;
+	durasi[1] = (double)(detik) / CLOCKS_PER_SEC;
+
+	printf("\n\n");
+    printf("\t\t======================================================\n");
+    printf("\t\t|\tBUBLE SORTING 64000 DATA ACAK                 |\n");
+	printf("\t\t======================================================\n");
+	printf("\t\t|Waktu Yang Dibutuhkan                               |\n");
+	printf("\t\t======================================================\n");
+	printf("\t\t|Durasi waktu Cara biasa   : %f detik          |\n", durasi[0]);
+	printf("\t\t|Durasi waktu cara Pointer : %f detik          |\n", durasi[1]);
+	printf("\t\t======================================================\n");
+}
