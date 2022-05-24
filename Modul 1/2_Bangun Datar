@@ -1,1 +1,324 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+void tampilanUtama();
+void promptBidang(int bidang);
+void subProgram(int menu, int subMenu);
+
+//validasi 
+int validInt(int *var);
+float validFlt(float *var);
+void reVldInt(int *var, char *keterangan);
+void reVldFlt(float *var, char *keterangan);
+void rangeVldInt(int *var, int range1, int range2, char *keterangan);
+void rangeVldFlt(float *var, char *keterangan);
+int tryAgain(char y, char n, char *keterangan);
+
+
+int main(){
+    tampilanUtama();
+}
+
+void tampilanUtama(){
+    system("cls");
+    int menu;
+
+	printf("\t\t\t       _________________________________________________________\n"); //kalimat pembuka
+	printf("\t\t\t      |          PENGHITUNGAN BANGUN DATAR KELOMPOK 25          |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+	printf("\t\t\t      | NAMA ANGGOTA KELOMPOK 25 :                              |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+	printf("\t\t\t      | MARIA CHRISTINA HARTONO                (2105551010)     |\n");
+	printf("\t\t\t      | I MADE DWIKA DYANANDA KUMARA           (2105551074)     |\n");
+	printf("\t\t\t      | I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA (2105551081)     |\n)");
+	printf("\t\t\t      | NI MADE RANTINI                         (2105551156)    |\n)");
+	printf("\t\t\t      | I GUSTI AGUNG BAGUS DHAMADI WIBAWA     (2105551139)     |\n");
+	printf("\t\t\t      | ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    (2105551134)     |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+    printf("\n\t\t\t Menu : ");
+    printf("\n\t\t\t 1. Segitiga Sembarang");
+    printf("\n\t\t\t 2. Belah Ketupat");
+    printf("\n\t\t\t 3. Jajar Genjang");
+    printf("\n\t\t\t 4. Trapesium");
+    printf("\n\t\t\t 5. Lingkaran");
+    printf("\n\t\t\t 6. Keluar");
+    
+    rangeVldInt(&menu,1,6,"\n\t\t\tPilihan Anda : ");
+    
+    if(1<= menu && menu <= 5){
+        promptBidang(menu);
+    }else{
+        printf("\n\t\t\tProgram Berakhir");
+        exit(0);
+    }
+}
+
+
+void promptBidang(int menu){
+    system("cls");
+    int subMenu;
+
+    printf("\n\t\t\t===================");
+    printf("\n\t\t\t1. Keliling ");
+    printf("\n\t\t\t2. Luas ");
+    printf("\n\t\t\t3. Kembali");
+    printf("\n\t\t\t===================");
+    rangeVldInt(&subMenu,1,3,"\n\t\t\t Pilihan Anda : ");
+
+    if(1<= subMenu && subMenu <= 2){
+        subProgram(menu, subMenu);
+    }else{
+        tampilanUtama();
+    } 
+}
+
+
+void subProgram(int menu, int subMenu){
+    system("cls");
+    int ulangi;
+
+    // keliling segitiga sembarang
+    if (menu == 1 && subMenu == 1){
+        float a, b, c, keliling;
+
+        printf("\n\t\t\tProgram Menghitung Keliling Segitaiga Sembarang\n");
+        printf("\t\t\t==================================\n");
+        reVldFlt(&a, "\t\t\t Masukkan panjang sisi a\t\t: "); 
+        reVldFlt(&b, "\t\t\t Masukkan panjang sisi b\t\t: "); 
+        reVldFlt(&c, "\t\t\t Masukkan panjang sisi c\t\t: "); 
+
+        if(a==b || b==c || c==a || a==0 || b==0 || c==0){
+        printf("\t\t\tBUKAN SEGITIGA SEMBARANG\n");
+        }else{
+            keliling=(a+b+c);
+            printf("\t\t\t==================================");
+            printf("\n\t\t\t> Keliling   adalah :%.2f",keliling);
+            printf("\n\t\t\t==================================\n");
+        }
+    }
+
+    //luas segitiga sembarang
+    else if (menu == 1 && subMenu == 2){
+        float a, b, c, s, luas;
+
+        printf("\n\t\t\tProgram Menghitung Luas Segitiga Sembarang\n");
+        printf("\t\t\t==================================\n");
+        rangeVldFlt(&a, "\t\t\t Masukkan panjang sisi a\t\t: "); 
+        rangeVldFlt(&b, "\t\t\t Masukkan panjang sisi b\t\t: "); 
+        rangeVldFlt(&c, "\t\t\t Masukkan panjang sisi c\t\t: "); 
+
+        if(a==b || b==c || c==a || a==0 || b==0 || c==0){
+            printf("\t\t\tBUKAN SEGITIGA SEMBARANG\n");
+        }else{
+            s=(a+b+c)/2;
+            luas=sqrt(s*(s-a)*(s-b)*(s-c));
+            printf("\t\t\t==================================");
+            printf("\n\t\t\t> Luas       adalah :%.2f",luas);
+            printf("\n\t\t\t==================================\n");
+      }
+    }
+
+    //keliling belah ketupat
+    else if (menu == 2 && subMenu == 1){
+        float s, keliling;
+
+        printf("\n\t\t\tProgram Menghitung Keliling Belah Ketupat\n");
+        printf("\t\t\t==================================\n");
+        rangeVldFlt(&s, "\t\t\t Masukkan panjang sisi\t\t: ");
+
+        keliling = 4 * s;
+        printf("\n\t\t\t==================================\n");
+        printf("\n\t\t\tKeliling   adalah :%.2f",keliling);
+        printf("\n\t\t\t==================================\n");
+    }
+
+    // luas belah ketupat
+    else if (menu == 2 && subMenu == 2){
+        float d1, d2, luas;
+
+        printf("\n\t\t\tProgram Menghitung Luas Belah Ketupat\n");
+        printf("\t\t\t==================================\n");
+        rangeVldFlt(&d1, "\t\t\t Masukkan panjang diagonal 1\t\t: ");
+        rangeVldFlt(&d2, "\t\t\t Masukkan panjang diagonal 2\t\t: ");
+
+        luas= d1*d2/2;
+        printf("\n\t\t\t==================================\n");
+        printf("\t\t\tLuas       adalah :%.2f",luas);
+        printf("\n\t\t\t==================================\n");
+    }
+
+    //keliling jajar genjang
+    else if (menu == 3 && subMenu == 1){
+        float s1, s2, keliling;
+
+        printf("\n\t\t\tProgram Menghitung Keliling Jajar Genjang\n");
+        printf("\t\t\t==================================\n");
+        rangeVldFlt(&s1, "\t\t\t Masukkan panjang sisi 1\t\t: ");
+        rangeVldFlt(&s2, "\t\t\t Masukkan panjang sisi 2\t\t: ");
+
+        keliling= 2*(s1+s2);
+        printf("\n\t\t\t==================================");
+        printf("\n\t\t\t> Keliling   adalah :%.2f",keliling);
+        printf("\n\t\t\t==================================\n");
+    }
+
+    //luas jajar genjang
+    else if (menu == 3 && subMenu == 2){
+        float alas, tinggi, luas;
+
+        printf("\n\t\t\tProgram Menghitung Luas Jajar Genjang\n");
+        printf("\t\t\t==================================\n");
+        rangeVldFlt(&alas, "\t\t\t Masukkan panjang alas\t\t: ");
+        rangeVldFlt(&tinggi, "\t\t\t Masukkan panjang tinggi\t: ");
+
+        luas= alas*tinggi;
+        printf("\n\t\t\t==================================");
+        printf("\n\t\t\t> Luas       adalah :%.2f",luas);
+        printf("\n\t\t\t==================================\n");  
+    }
+
+    //keliling trapesium
+    else if(menu == 4 && subMenu == 1){
+        float sa, sb, sm, t, keliling;
+
+        printf("\n\t\t\tProgram Menghitung Keliling Trapesium\n");
+        printf("\t\t\t==================================================\n");
+        rangeVldFlt(&sa, "\t\t\t Masukkan panjang sisi atas\t\t: ");
+        rangeVldFlt(&sb, "\t\t\t Masukkan panjang sisi bawah\t\t: ");
+        rangeVldFlt(&sm, "\t\t\t Masukkan panjang sisi miring\t\t: ");
+        rangeVldFlt(&t, "\t\t\t Masukkan panjang sisi tinggi\t\t: ");
+
+        keliling = sa + sm + sb + t;
+        printf("\n\t\t\t==================================");
+        printf("\n\t\t\t> Keliling   adalah :%.2f",keliling);
+        printf("\n\t\t\t==================================\n");
+    }
+
+    //luas trapesium
+    else if(menu == 4 && subMenu == 2){
+        float sa, sb, t, luas;
+
+        printf("\n\t\t\tProgram Menghitung Luas Trapesium\n");
+        printf("\t\t\t==================================================\n");
+        rangeVldFlt(&sa, "\t\t\t Masukkan panjang sisi atas\t\t: ");
+        rangeVldFlt(&sb, "\t\t\t Masukkan panjang sisi bawah\t\t: ");
+        rangeVldFlt(&t, "\t\t\t Masukkan panjang tinggi \t\t: ");
+
+        luas = ((sa + sb) * t) / 2;
+        printf("\n\t\t\t==================================");
+        printf("\n\t\t\t> Luas   adalah :%.2f",luas);
+        printf("\n\t\t\t==================================\n");
+    }
+
+    //keliling lingkarang
+    else if(menu == 5 && subMenu == 1){
+        float r, keliling;
+        printf("\n\t\t\tProgram Menghitung Keliling Lingkaran\n");
+        printf("\t\t\t==================================================\n");
+        rangeVldFlt(&r, "\t\t\t Masukkan panjang jari-jari\t\t: ");
+
+        keliling = 3.14 * 2 * r;
+        printf("\n\t\t\t==================================\n");
+        printf("\n\t\t\t> Keliling   adalah :%.2f",keliling);
+        printf("\n\t\t\t==================================\n");
+    }
+
+    //luas lingkaran
+    else if(menu == 5 && subMenu == 2){
+        float r, luas;
+
+        printf("\n\t\t\tProgram Menghitung Luas Lingkaran\n");
+        printf("\t\t\t==================================================\n");
+        rangeVldFlt(&r, "\t\t\t Masukkan panjang jari-jari\t\t: ");
+
+        luas = 3.14 * r * r;
+        printf("\n\t\t\t==================================\n");
+        printf("\n\t\t\t> Luas       adalah :%.2f",luas);
+        printf("\n\t\t\t==================================\n");
+    }
+
+    printf("\n\t\t\t1. Ulangi Menghitung");  
+    printf("\n\t\t\t2. Ganti Perintah");  
+    printf("\n\t\t\t3. Menu Utama");  
+    printf("\n\t\t\t4. Akhiri Program");
+    printf("\n\t\t\t==================================\n");
+    rangeVldInt(&ulangi, 1,4, "\n\n\t\t\t Pilih : ");
+
+    switch (ulangi){
+        case 1:
+            subProgram(menu, subMenu);
+            break;
+        case 2:
+            promptBidang(menu);
+            break;
+        case 3:
+            tampilanUtama();
+        case 4:
+            printf("\n\t\t\tProgram Berakhir");
+            exit(0);
+    }
+}
+
+int validInt(int *var){
+    char buff[1024];
+    char cek;
+    fflush(stdin);
+    if(fgets(buff, sizeof(buff), stdin) != NULL){
+        if(sscanf(buff, "%d %c", var, &cek) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+float validFlt(float *var){
+    char buff[1024];
+    char cek;
+    fflush(stdin);
+    if(fgets(buff, sizeof(buff), stdin) != NULL){
+        if(sscanf(buff, "%f %c", var, &cek) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void reVldInt(int *var, char *keterangan){
+    while(1){
+        printf(keterangan);
+        if(validInt(var))
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+void reVldFlt(float *var, char *keterangan){
+    while(1){
+        printf(keterangan);
+        if(validFlt(var))
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+void rangeVldInt(int *var, int range1, int range2, char *keterangan){
+    while(1){
+        reVldInt(var, keterangan);
+        if(*var >= range1  && *var <= range2)
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+void rangeVldFlt(float *var, char *keterangan){
+    while(1){
+        reVldFlt(var, keterangan);
+        if(*var >0)
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
 
