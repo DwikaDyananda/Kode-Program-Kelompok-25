@@ -1,1 +1,259 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define phi 3.14
 
+void prompt_bidang(int bidang);
+void sub_program(int menu, int submenu);
+
+//validasi
+int validInt(int *var){
+    char buff[1024];
+    char cek;
+    fflush(stdin);
+    if(fgets(buff, sizeof(buff), stdin) != NULL){
+        if(sscanf(buff, "%d %c", var, &cek) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void reVldInt(int *var, char *keterangan){
+    while(1){
+        printf("%s", keterangan);
+        fflush(stdin);
+        if(validInt(var))
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+float validFlt(float *var){
+    char buff[1024];
+    char cek;
+    fflush(stdin);
+    if(fgets(buff, sizeof(buff), stdin) != NULL){
+        if(sscanf(buff, "%f %c", var, &cek) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void reVldFlt(float *var, char *keterangan){
+    while(1){
+        printf("%s",keterangan);
+        fflush(stdin);
+        if(validFlt(var))
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+void rangeVldInt(int *var, int range1, int range2, char *keterangan){
+    while(1){
+        reVldInt(var, keterangan);
+        fflush(stdin);
+        if(*var >= range1  && *var <= range2)
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+int main(){
+    int menu;
+    system("cls");
+	printf("\t\t\t       _________________________________________________________\n"); //kalimat pembuka
+	printf("\t\t\t      |          PENGHITUNGAN BANGUN RUANG KELOMPOK 25          |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+	printf("\t\t\t      | NAMA ANGGOTA KELOMPOK 25 :                              |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+	printf("\t\t\t      | MARIA CHRISTINA HARTONO                (2105551010)     |\n");
+	printf("\t\t\t      | I MADE DWIKA DYANANDA KUMARA           (2105551074)     |\n");
+	printf("\t\t\t      | I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA (2105551081)     |\n)");
+	printf("\t\t\t      | NI MADE RANTINI                         (2105551156)    |\n)");
+	printf("\t\t\t      | I GUSTI AGUNG BAGUS DHAMADI WIBAWA     (2105551139)     |\n");
+	printf("\t\t\t      | ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    (2105551134)     |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+    printf("\n\t\t\t Menu : ");
+    printf("\n\t\t\t  1. Tabung");
+    printf("\n\t\t\t  2. Bola");
+    printf("\n\t\t\t  3. Limas Segiempat");
+    printf("\n\t\t\t  4. Prisma Segitiga");
+    printf("\n\t\t\t  5. Kerucut");
+    printf("\n\t\t\t  6. Keluar");
+    rangeVldInt(&menu,1,6,"\n\t\t\tPilihlah berdasarkan menu diatas : ");
+
+    switch (menu) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            prompt_bidang(menu);
+            break;
+        case 6:
+            exit(0);
+            break;
+        default:
+            printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+            main();
+            break;
+    }
+
+    printf("\n\t\t\tTerima Kasih Telah Menggunakan Program");
+    return 0;
+}
+
+void prompt_bidang(int bidang){
+    system("cls");
+    int submenu;
+
+    printf("\n\t\t\t===================");
+    printf("\n\t\t\t1. Volume ");
+    printf("\n\t\t\t2. Luas ");
+    printf("\n\t\t\t3. Kembali");
+    printf("\n\t\t\t===================");
+    rangeVldInt(&submenu,1,3,"\n\t\t\t Pilih Menu : ");
+
+    switch (submenu) {
+        case 1:
+        case 2:
+            sub_program(bidang,submenu);
+            break;
+        case 3:
+            main();
+            break;
+        default:
+            printf("\n\t\t\tSubmenu tidak ditemukan");
+            prompt_bidang(bidang);
+            break;
+    }
+}
+//volumetabung
+void sub_program(int menu, int submenu){
+    if (menu == 1 && submenu == 1){
+        system("cls");
+        float r,t;
+        float vt;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Volume Tabung");
+        reVldFlt(&r,"\n\t\t\tMasukkan Jari Jari Tabung (cm)\t : ");
+        reVldFlt(&t,"\t\t\tMasukkan Tingi Tabung (cm)\t\t : ");
+        vt = phi * r * r * t;
+        printf("\n\t\t\tVolume Tabung (cm)\t\t : %.2lf cm kubik", vt);
+    }
+    else if (menu == 1 && submenu == 2){		//luastabung
+        system("cls");
+        float r,t;
+        float lt;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Luas Tabung");
+        reVldFlt(&r,"\n\t\t\tMasukkan Jari Jari Tabung (cm)\t : ");
+        reVldFlt(&t,"\t\t\tMasukkan Tingi Tabung (cm)\t\t : ");
+        lt = (phi * r * r) * 2 + (2 * phi * r) * t;
+        printf("\n\t\t\tLuas Tabung (cm)\t\t : %.2lf cm kuadrat", lt);
+    }
+    else if (menu == 2 && submenu == 1){		//volumebola
+        system("cls");
+        float r;
+        float vb;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Volume Bola");
+        reVldFlt(&r,"\n\t\t\tMasukkan Jari Jari Bola (cm)\t : ");
+        vb = 4 * phi * r * r * r / 3;
+        printf("\t\t\tVolume Bola (cm)\t\t : %.2lf cm kubik", vb);
+    }
+    else if (menu == 2 && submenu == 2){		//luas bola
+        system("cls");
+        float r;
+        float lb;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Luas Bola");
+        reVldFlt(&r,"\n\t\t\tMasukkan Jari Jari Bola (cm)\t : ");
+        lb = 4 * phi * r * r;
+        printf("\n\t\t\tLuas Bola (cm)\t\t : %.2lf cm Kuadrat", lb);
+    }
+    else if (menu == 3 && submenu == 1){		//volumelimas
+        system("cls");
+        float sisi[1], t;
+        float vl;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Volume Limas");
+        reVldFlt(&sisi[0],"\n\t\t\tMasukkan sisi alas 1\t: ");
+        reVldFlt(&sisi[1],"\t\t\tMasukkan sisi alas 2\t: ");
+        reVldFlt(&t,"\t\t\tMasukkan Tinggi Limas\t: ");
+        vl = (sisi[0]*sisi[1]*t)/3;
+        printf("\n\t\t\tVolume Limas (cm)\t\t : %.2lf cm kubik", vl);
+    }
+    else if (menu == 3 && submenu == 2){		//luaslimas
+        system("cls");
+        float sisi[1], t_warp;
+        float ll;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Luas Limas");
+        reVldFlt(&sisi[0],"\n\t\t\tMasukkan sisi alas 1\t: ");
+        reVldFlt(&sisi[1],"\t\t\tMasukkan sisi alas 2\t: ");
+        reVldFlt(&t_warp,"\t\t\tMasukkan Tinggi Selimut\t: ");
+        ll = (sisi[0]*sisi[1]) + (2*sisi[0]*t_warp/2) + (2*sisi[1]*t_warp/2);
+        printf("\n\t\t\tLuas Limas (cm)\t\t : %.2lf cm kuadrat", ll);
+    }
+    else if(menu == 4 && submenu == 1){		//volumeprisma
+        system("cls");
+        float a, tA, tP;
+        float vp;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Volume Prisma");
+        reVldFlt(&a,"\n\t\t\tMasukkan sisi alas\t: ");
+        reVldFlt(&tA,"\t\t\tMasukkan tinggi alas\t: ");
+        reVldFlt(&tP,"\t\t\tMasukkan tinggi prisma\t: ");
+        vp = (a*tA/2)*tP;
+        printf("\n\t\t\tVolume Prisma (cm)\t\t : %.2lf cm kubik", vp);
+    }
+    else if(menu == 4 && submenu == 2){		//luasprisma
+        system("cls");
+        float a, tA, tP, sisi[1];
+        float lp;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Luas Prisma");
+        reVldFlt(&a,"\n\t\t\tMasukkan sisi alas 1\t: ");
+        reVldFlt(&sisi[0],"\t\t\tMasukkan sisi alas 2\t: ");
+        reVldFlt(&sisi[1],"\t\t\tMasukkan sisi alas 3\t: ");
+        reVldFlt(&tA,"\t\t\tMasukkan tinggi alas\t: ");
+        reVldFlt(&tP,"\t\t\tMasukkan tinggi prisma\t: ");
+        lp = 2*(a*tA/2)+((a+sisi[0]+sisi[1])*tP);
+        printf("\n\t\t\tLuas Prisma (cm)\t\t : %.2lf cm kuadrat", lp);
+    }
+    else if(menu == 5 && submenu == 1){		//volume kerucut
+        system("cls");
+        float r,t;
+        float vk;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Volume Kerucut");
+        reVldFlt(&r,"\n\t\t\tMasukkan Jari Jari Kerucut (cm)\t : ");
+        reVldFlt(&t,"\t\t\tMasukkan Tinggi Kerucut (cm)\t : ");
+        vk = phi*r*r*t/3;
+        printf("\n\t\t\tVolume Kerucut (cm)\t\t : %.2lf cm kubik", vk);
+    }
+    else if(menu == 5 && submenu == 2){		//volume kerucut
+        system("cls");
+        float r,gP;
+        float lk;
+        printf("\n\t\t\t==========================");
+        printf("\n\t\t\tAnda memilih Volume Kerucut");
+        reVldFlt(&r,"\n\t\t\tMasukkan Jari Jari Kerucut (cm)\t : ");
+        reVldFlt(&gP,"\t\t\tMasukkan Garis Pelukis (cm)\t : ");
+        lk = ((phi*r*r)+(phi*r*gP));
+        printf("\n\t\t\tLuas Kerucut (cm)\t\t : %.2lf cm kuadrat", lk);
+    }
+
+    int ulang,kembali;
+
+    printf("\n\t\t\t~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    rangeVldInt(&ulang,0,1,"\n\t\t\tIngin Mengulang Kembali \t [ 0(tidak) / 1(Ya) ] : ");
+    if (ulang == 1) sub_program(menu,submenu);
+    else{
+        rangeVldInt(&kembali,0,1,"\t\t\tkembali ke Pemilihan Submenu [ 0(tidak) / 1(Ya) ] : ");
+        if (kembali == 1) prompt_bidang(menu);
+    }
+}
