@@ -1,1 +1,140 @@
+#include <stdio.h>
+#include <string.h>
 
+typedef char String[255];
+
+typedef struct{
+    String nama;
+    int nilai;
+}Mahasiswa;
+
+
+FILE *openFile();
+void profil();
+void sorting(Mahasiswa *mahasiswas, int size);
+void swap(Mahasiswa *mahasiswas1, Mahasiswa *mahasiswas2);
+void endProgram();
+
+int main(){
+    int i=1, size=1;
+    String from = "asistenin", to = "asistenout";
+    
+    profil();
+    
+    printf("Membuka file %s..\n", from);
+    FILE *fFrom = openFile(from, "r");
+
+    if(!fFrom){
+        printf("File %s tidak ada\n", from);
+
+    }else{
+
+        Mahasiswa mahasiswas[999] ;
+
+        printf("\nMembaca file %s..\n", from);
+        while(!feof(fFrom)){
+
+            //mengambil data dari file
+            if(i%2 != 0){
+                fscanf(fFrom, "%[^\n]s\n", &mahasiswas[size-1].nama);
+                fflush(stdin);
+                printf("%s\n", mahasiswas[size-1].nama);
+            }else{
+                fscanf(fFrom, "%d\n", &mahasiswas[size-1].nilai);
+                fflush(stdin);
+                printf("%d\n", mahasiswas[size-1].nilai);
+                size++;
+            }
+            i++;
+        }
+
+        fclose(fFrom);
+
+        printf("\nRangking data..\n");
+        sorting(mahasiswas, size-1);
+
+        FILE *fTo = openFile(to, "w");
+
+        printf("Menulis file %s..\n", to);
+        for(i=0; i < size-1; i++){
+            fprintf(fTo,"%d. %s %d\n", i+1, mahasiswas[i].nama, mahasiswas[i].nilai);
+        }
+
+        fclose(fTo);
+    }
+
+    endProgram();
+
+    return 0;
+}
+
+void profil(){
+	
+ printf("=====================================================\n");
+ printf("|      PROGRAM SISTEM INFORMASI DATA MAHASISWA      |\n");
+ printf("|                     KELOMPOK 25                   |\n");
+ printf("=====================================================\n");
+ printf("| 2005551010 MARIA CHRISTINA HARTONO                |\n");
+ printf("| 2005551074 I MADE DWIKA DYANANDA KUMARA           |\n");
+ printf("| 2005551081 I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA |\n");
+ printf("| 2005551134 ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    |\n");
+ printf("| 2005551139 I GUSTI AGUNG BAGUS DHAMADI WIBAWA     |\n");
+ printf("| 2005551156 NI MADE RANTINI                        |\n");
+ printf("=====================================================\n");
+ printf("|          Tekan ENTER  untuk melanjutkan....       |\n");
+ printf("=====================================================\n");
+ getchar();
+ system("cls");
+ 
+}
+
+void sorting(Mahasiswa *mahasiswas, int size){
+    int i,j;
+    Mahasiswa *temp = mahasiswas;
+
+    for(i=0;i<size;++i){
+        for(j=0;j<size-1;j++){
+            Mahasiswa *mahasiswas2 = mahasiswas + 1;
+
+            if(mahasiswas->nilai < mahasiswas2->nilai){
+                swap(mahasiswas, mahasiswas2);
+            }
+
+            mahasiswas++;
+        }
+        mahasiswas = temp;
+    }
+}
+
+void swap(Mahasiswa *mahasiswas1, Mahasiswa *mahasiswas2){
+    Mahasiswa temp = *mahasiswas1;
+    *mahasiswas1 = *mahasiswas2;
+    *mahasiswas2 = temp;
+}
+
+void endProgram(){
+    char pilihan;
+
+    system("pause");
+
+    menu_back:
+    printf("\nUlangi program? (y/n): ");
+
+    pilihan = getche();
+
+    if(tolower(pilihan) == 'y'){
+        system("cls");
+        main();
+    }else if(tolower(pilihan) != 'n'){
+        puts("\ninput salah, masukkan y untuk yes dan n untuk no");
+        goto menu_back;
+    }
+}
+
+FILE *openFile(String namaFile, String mode){
+    strcat(namaFile, ".txt");
+
+    FILE *file = fopen(namaFile, mode);
+
+    return file;
+}
