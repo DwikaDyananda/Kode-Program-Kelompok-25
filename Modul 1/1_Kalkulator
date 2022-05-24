@@ -1,1 +1,173 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
+void subProgram(int menu);
+
+//validasi
+int validInt(int *var){
+    char buff[1024];
+    char cek;
+    fflush(stdin);
+    if(fgets(buff, sizeof(buff), stdin) != NULL){
+        if(sscanf(buff, "%d %c", var, &cek) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void reVldInt(int *var, char *keterangan){
+    while(1){
+        printf("%s", keterangan);
+        fflush(stdin);
+        if(validInt(var))
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+float validFlt(float *var){
+    char buff[1024];
+    char cek;
+    fflush(stdin);
+    if(fgets(buff, sizeof(buff), stdin) != NULL){
+        if(sscanf(buff, "%f %c", var, &cek) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+
+void reVldFlt(float *var, char *keterangan){
+    while(1){
+        printf("%s",keterangan);
+        fflush(stdin);
+        if(validFlt(var))
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+void rangeVldInt(int *var, int range1, int range2, char *keterangan){
+    while(1){
+        reVldInt(var, keterangan);
+        fflush(stdin);
+        if(*var >= range1  && *var <= range2)
+            break;
+        printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+    }
+}
+
+int main(){
+    int opsi;
+
+	printf("\t\t\t       _________________________________________________________\n"); //kalimat pembuka
+	printf("\t\t\t      |          SELAMAT DATANG DI KALKULATOR KELOMPOK 25       |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+	printf("\t\t\t      | NAMA ANGGOTA KELOMPOK 25 :                              |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+	printf("\t\t\t      | MARIA CHRISTINA HARTONO                (2105551010)     |\n");
+	printf("\t\t\t      | I MADE DWIKA DYANANDA KUMARA           (2105551074)     |\n");
+	printf("\t\t\t      | I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA (2105551081)     |\n)");
+	printf("\t\t\t      | NI MADE RANTINI                        (2105551156)     |\n)");
+	printf("\t\t\t      | I GUSTI AGUNG BAGUS DHAMADI WIBAWA     (2105551139)     |\n");
+	printf("\t\t\t      | ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    (2105551134)     |\n");
+	printf("\t\t\t      |_________________________________________________________|\n");
+  	printf("\n\n");
+	printf("\t\t\t\t\t[][][][][]# PILIHAN KALKULATOR #[][][][][]\n");
+	printf("\t\t\t\t\t[]        1. Penjumlahan                []\n");
+	printf("\t\t\t\t\t[]        2.   Pengurangan              []\n");
+	printf("\t\t\t\t\t[]        3.   Perkalian                []\n");
+	printf("\t\t\t\t\t[]        4.   Pembagian                []\n");
+	printf("\t\t\t\t\t[]        5.   Modulus                  []\n");
+	printf("\t\t\t\t\t[]        6.   Exit                     []\n");
+	printf("\t\t\t\t\t------------------------------------------\n");
+    rangeVldInt(&opsi, 1, 6, "\n\t\t\tPilihlah menu dari pilihan diatas : ");
+
+    switch (opsi) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            subProgram(opsi);
+            break;
+        case 6:
+            exit(0);
+        default:
+            printf("\t\t\t Input salah! Silahkan coba lagi.\n");
+            main();
+            break;
+    }
+
+    return 0;
+}
+
+void subProgram(int menu){
+    float angka1, angka2;
+    if (menu == 1 ){
+        system("cls");
+        printf("\n\t\t\t\t========================");
+        printf("\n\t\t\t\tAnda memilih pertambahan");
+        printf("\n\t\t\t\t========================");
+        reVldFlt(&angka1,"\n\t\t\t\tMasukkan angka pertama  : ");
+        reVldFlt(&angka2,"\t\t\t\tMasukkan angka kedua    : ");
+        printf("\n\t\t\t\tHasil dari %.2lf tambah %.2lf : %.2lf\n", angka1, angka2, angka1 + angka2);
+    }
+    else if (menu == 2){
+        system("cls");
+        printf("\n\t\t\t\t========================");
+        printf("\n\t\t\t\tAnda memilih pengurangan");
+        printf("\n\t\t\t\t========================");
+        reVldFlt(&angka1,"\n\t\t\t\tMasukkan angka pertama  : ");
+        reVldFlt(&angka2,"\t\t\t\tMasukkan angka kedua    : ");
+        printf("\n\t\t\t\tHasil dari %.2lf kurang %.2lf : %.2lf\n", angka1, angka2, angka1 - angka2);
+    }
+    else if (menu == 3){
+        system("cls");
+        printf("\n\t\t\t\t========================");
+        printf("\n\t\t\t\tAnda memilih perkalian");
+        printf("\n\t\t\t\t========================");
+        reVldFlt(&angka1,"\n\t\t\t\tMasukkan angka pertama  : ");
+        reVldFlt(&angka2,"\t\t\t\tMasukkan angka kedua    : ");
+        printf("\n\t\t\t\tHasil dari %.2lf kali %.2lf : %.2lf\n", angka1, angka2, angka1 * angka2);
+    }
+    else if (menu == 4){
+        system("cls");
+        printf("\n\t\t\t\t========================");
+        printf("\n\t\t\t\tAnda memilih pembagian");
+        printf("\n\t\t\t\t========================");
+        reVldFlt(&angka1,"\n\t\t\t\tMasukkan angka pertama  : ");
+        reVldFlt(&angka2,"\t\t\t\tMasukkan angka kedua    : ");
+        if (angka1 == 0 || angka2 == 0){
+        	printf("\n\t\t\tPembagian tidak dapat dilakukan dengan masukan 0");
+		}else{
+        	printf("\n\t\t\t\tHasil dari %.2lf dibagi %.2lf : %.2lf\n", angka1, angka2, (float)angka1 / (float)angka2);	
+		}
+    }
+    else if (menu == 5){
+        system("cls");
+        printf("\n\t\t\t\t========================");
+        printf("\n\t\t\t\tAnda memilih modulus");
+        printf("\n\t\t\t\t========================");
+        reVldFlt(&angka1,"\n\t\t\t\tMasukkan angka pertama  : ");
+        reVldFlt(&angka2,"\t\t\t\tMasukkan angka kedua    : ");
+        if(angka1 == 0 || angka2 == 0){
+        	printf("\n\t\t\tInput tidak dapat dimasukan angka 0");
+		}else{
+        	printf("\n\t\t\t\tHasil dari %.2lf mod %.2lf : %.2lf\n", angka1, angka2, fmod(angka1,angka2));
+ 	  	}
+	}
+    int ulang,kembali;
+
+    printf("\n\t\t\t~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    rangeVldInt(&ulang,0,1,"\n\t\t\tIngin Mengulang Kembali \t [ 0(tidak) / 1(Ya) ] : ");
+    if (ulang == 1) subProgram(menu);
+    else{
+        rangeVldInt(&kembali,0,1,"\t\t\tkembali ke Menu \t\t\t [ 0(tidak) / 1(Ya) ] : ");
+        if (kembali == 1) main();
+    }
+}
