@@ -1,1 +1,123 @@
+#include <stdio.h>
+#include <string.h>
 
+typedef char String[255];
+
+typedef struct{
+    int jamKerja;
+    int jamLembur;
+    long utama;
+    long lembur;
+    long total;
+}Gaji;
+
+int inputAngka(String keterangan);
+void profil();
+void endProgram();
+
+int main(){
+    const gajiPerjam = 10625;
+    Gaji gaji;
+    
+    profil();
+    cobaLagi:
+    gaji.jamKerja = inputAngka("lama kerja (jam)");
+
+    
+	if(gaji.jamKerja>=0 && gaji.jamKerja<=8) {
+		gaji.utama = gaji.jamKerja * gajiPerjam;
+
+	    printf("\nRincian gaji dengan lama kerja %d jam:", gaji.jamKerja);
+	    printf("\nGaji utama sebesar %d x %ld = Rp %ld", gaji.jamKerja, gajiPerjam, gaji.utama);
+	    printf("\nTotal gaji sebesar Rp %ld", gaji.utama);
+	
+	    endProgram();
+        
+	}
+	else if(gaji.jamKerja > 8 && gaji.jamKerja <=24){
+        gaji.jamLembur = gaji.jamKerja - 8;
+        gaji.jamKerja = 8;
+
+        gaji.lembur = gaji.jamLembur * 8 * gajiPerjam;
+        
+    	gaji.utama = gaji.jamKerja * gajiPerjam;
+    	gaji.total = gaji.utama + gaji.lembur;
+
+	    printf("\nRincian gaji dengan lama kerja %d jam:", gaji.jamKerja + gaji.jamLembur);
+	    printf("\nGaji utama sebesar %d x %ld = Rp %ld", gaji.jamKerja, gajiPerjam, gaji.utama);
+	    printf("\nGaji lembur sebesar %d x %ld = Rp %ld", gaji.jamLembur, gajiPerjam*8, gaji.lembur);
+	    printf("\nTotal gaji sebesar %ld + %ld = Rp %ld", gaji.utama, gaji.lembur, gaji.total);
+	
+	    endProgram();
+        
+    }else if(gaji.jamKerja>24){
+    	printf("Jumlah jam kerja maksimal 24 jam. Coba lagi\n");
+    	getchar();
+    	system("cls");
+    	goto cobaLagi;
+	}
+	
+
+
+    return 0;
+}
+
+
+void profil(){
+	
+ printf("=====================================================\n");
+ printf("|           PROGRAM MENGHITUNG GAJI HARIAN          |\n");
+ printf("|                     KELOMPOK 25                   |\n");
+ printf("=====================================================\n");
+ printf("| 2105551010 MARIA CHRISTINA HARTONO                |\n");
+ printf("| 2105551074 I MADE DWIKA DYANANDA KUMARA           |\n");
+ printf("| 2105551081 I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA |\n");
+ printf("| 2105551134 ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    |\n");
+ printf("| 2105551139 I GUSTI AGUNG BAGUS DHAMADI WIBAWA     |\n");
+ printf("| 2105551156 NI MADE RANTINI                        |\n");
+ printf("=====================================================\n");
+ printf("|          Tekan ENTER  untuk melanjutkan....       |\n");
+ printf("=====================================================\n");
+ getchar();
+ system("cls");
+
+}
+
+void endProgram(){
+    char pilihan;
+
+    printf("\n\n");
+    system("pause");
+
+    printf("\nUlangi program? (y/n): ");
+
+    pilihan = getche();
+
+    if(tolower(pilihan) == 'y'){
+        system("cls");
+        main();
+    }else if(tolower(pilihan) != 'n'){
+        puts("\nInput salah, tekan y untuk mengulangi dan n untuk keluar");
+        endProgram();
+    }
+}
+
+int inputAngka(String keterangan){
+    int i=0;
+    String in;
+    Gaji gaji;
+
+    validation:
+    printf("Masukkan %s: ", keterangan);
+    scanf("%s", &in);
+    fflush(stdin);
+    
+    for (i = 0; i < strlen(in); i++){
+        if (in[i] < 48 || in[i] > 57){
+            printf("Hanya boleh bilangan bulat positif. Coba lagi\n");
+            goto validation;
+        }
+    }
+
+    return atoi(in);
+}
