@@ -1,0 +1,244 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void validKalimat();
+int isPalindrom();
+void clearArray();
+void printHasil();
+void restart();
+void menu();
+
+char kalimat[1000];
+int jumlahHuruf;
+int jumlahAlpha[256];
+char cekKalimat[1000];
+
+
+int main (void){
+	menu();
+}
+
+void menu (void){
+ printf("=====================================================\n");
+ printf("|                PROGRAM CEK PALINDROM              |\n");
+ printf("|                     KELOMPOK 25                   |\n");
+ printf("=====================================================\n");
+ printf("| 2105551010 MARIA CHRISTINA HARTONO                |\n");
+ printf("| 2105551074 I MADE DWIKA DYANANDA KUMARA           |\n");
+ printf("| 2105551081 I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA |\n");
+ printf("| 2105551134 ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    |\n");
+ printf("| 2105551139 I GUSTI AGUNG BAGUS DHAMADI WIBAWA     |\n");
+ printf("| 2105551156 NI MADE RANTINI                        |\n");
+ printf("=====================================================\n");
+    clearArray();
+    validKalimat();
+}
+
+void clearArray(void){
+	int i;
+	for(i=0 ; i<256 ; i++){
+		jumlahAlpha[i]=0;
+	}
+}
+
+void inputKalimat(void){
+	printf("Masukkan Kalimat : ");
+	gets(kalimat);
+}
+
+void validKalimat(){
+	int i, test=0;
+	inputKalimat();
+	jumlahHuruf=0;
+	for(i = 0; (i < 1000 && kalimat[i] != '\0'); i++){
+		if(kalimat[i]>=65 && kalimat[i]<=90){
+			jumlahAlpha[(int)(kalimat[i])]++;
+			jumlahHuruf++;
+			test++;
+		}else if(kalimat[i]>=97 && kalimat[i]<=122){
+			jumlahAlpha[(int)(kalimat[i])]++;
+			jumlahHuruf++;
+			test++;
+		}else if(kalimat[i]==32){
+			jumlahAlpha[(int)(kalimat[i])]++;
+			jumlahHuruf++;
+		}else{
+			printf("Inputan Salah, Program Hanya Menerima Inputan Berupa Huruf!\n");
+			fflush(stdin);
+			validKalimat();
+			break;
+		}
+	}
+
+	if(test==0){
+		printf("Kalimat Tidak Valid!\n");
+		validKalimat();
+	}else{
+		printHasil();
+	}
+}
+
+int isPalindrom (void){
+	int i, j, k=0, check=0;
+	char kal[1000];
+	strcpy(kal, kalimat);
+	j=strlen(kalimat)-1;
+
+	for(i=0; i<=j; i++){
+		if(kal[k]==32){
+			while(kal[k]==32){
+				k++;
+			}
+		}
+		if(kal[j]==32){
+			while(kal[j]==32){
+				j--;
+			}
+		}else{
+			if(kal[k]==kal[j] || kal[k]==kal[j]-32 || kal[k]==kal[j]+32){
+				j--;
+				k++;
+				continue;
+			}else{
+				return 0;
+			}
+		}
+	}
+	return 1;
+ }
+
+void isiKamus(char kamus[][1000]){
+    char line[80] = "\0";
+    unsigned int line_count = 0;
+    char *token; 
+    int skip = 0; 
+    FILE *fp;
+    fp = fopen("kamuskata.txt","r");
+    if (!fp)
+    {
+        printf("DATA TIDAK DITEMUKAN membuat kamus baru\n");
+        return;
+    }
+    
+    while (fgets(line, sizeof(line), fp) != NULL) 
+    {
+    	char temp_kalimat[80] = "\0"; 
+        if (skip == 0) {
+			token=strtok(line, " ");
+		    while(token!=NULL){
+		        if (token[0] == '(') break;
+		        strcat(temp_kalimat, token);
+		        token=strtok (NULL, " ");
+		        if(token[0] != '(') strcat(temp_kalimat, " ");
+		    }
+	        strcpy(kamus[line_count],temp_kalimat);
+	        line_count++;
+	        skip = 1;
+    	}
+    	else {
+    		skip = 0;
+		}
+    }
+
+    fclose(fp);
+}
+
+int cekKamus(char kal[1000],char kamus[][1000],int size){
+    for(int i=0;i<size;i++){
+        if(strcmp(kal,kamus[i]) == 0){
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void printHasil (void){
+	int i, palindrom;
+	char kal[1000];
+	FILE *fp;
+	int size = 80;
+	char kamus[size][1000];
+	int cek_kamus = 0;
+    isiKamus(kamus);
+    fp=fopen("kamuskata.txt","a");
+    cek_kamus = cekKamus(kalimat,kamus,size);
+	printf("%s (%d): ", kalimat, jumlahHuruf);
+	if (cek_kamus == 1){
+        fprintf(fp,"%s (%d): ",kalimat, jumlahHuruf);
+	}
+	for(i=0 ; i<256 ; i++){
+		if(jumlahAlpha[i] != 0){
+			if(i==32){
+				printf("%s=%d ","spasi", jumlahAlpha[i]);
+				if (cek_kamus == 1){ 
+                    fprintf(fp,"%s=%d ","spasi", jumlahAlpha[i]);
+                }
+				continue;
+			}
+			printf("%c=%d ",i, jumlahAlpha[i]);
+			if (cek_kamus == 1){
+                fprintf(fp,"%c=%d ",i, jumlahAlpha[i]);
+            }
+		}
+	}
+
+	palindrom=isPalindrom();
+	if(palindrom)
+	{
+		printf(": Palindrome\n");
+		if (cek_kamus == 1)
+		{ 
+            fprintf(fp,": Palindrome\n\n");
+        }
+	}
+	else
+	{
+		printf(": Bukan Palindrome\n");
+		if (cek_kamus == 1) 
+		{ 
+            fprintf(fp,": Bukan Palindrome\n\n");
+        }
+	}
+	fclose(fp);
+	restart();
+}
+
+
+int input(int *select){
+    char buff[1024];
+    char term;
+    if(fgets(buff, sizeof(buff), stdin) != NULL && sscanf(buff, "%d %c", select, &term) == 1){
+        return 1;
+    }
+    printf("Inputan Salah, Masukan Angka!\n");
+    return 0;
+}
+
+int validation(int *var, char *prompt){
+    while(1){
+        printf(prompt);
+        if(input(var)) break;
+    }
+}
+
+void restart (void)
+{
+    int reset;
+    printf("\nIngin Mengecek Kembali?\n\n");
+    printf("[1]. Kembali Mengecek\n");
+    printf("[2]. Keluar\n");
+    validation(&reset, "Pilihan anda : ");
+    if(reset==1)
+    {
+        system("cls");
+        menu();
+    }else if(reset==2)
+    {
+        system("cls");
+        printf("Terimakasih, Sampai jumpa!");
+    }else{
+        printf("\nPilihan Tidak Tersedia\n");
+        restart();
+    }
+}
