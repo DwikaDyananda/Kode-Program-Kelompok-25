@@ -1,0 +1,137 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Kubus1{
+	int sisi;
+	int volume;
+	int luaspermukaan;
+};
+
+union Kubus2{
+	int sisi;
+	int volume;
+	int luaspermukaan;
+};
+
+struct Kubus1 skubus;
+union Kubus2 ukubus;
+
+void header();
+
+int volumekubus(int);
+
+int luaspermukaan(int);
+
+int verInput(int *var);
+
+void error();
+
+void ulangi();
+
+
+int main(){
+	int temp;
+	fflush(stdin);
+	
+	header();
+	printf("Masukkan Nilai Sisi: \n");
+	printf("> ");
+	while(1){
+		if(verInput(&temp)){
+			break;
+		}else{
+			error();
+		}
+	}
+	
+	skubus.sisi = temp;
+	skubus.volume = volumekubus(skubus.sisi);
+	skubus.luaspermukaan = luaspermukaan(skubus.sisi);
+	
+	printf("\nKubus dengan Struct\n");
+	printf("Sisi \t\t : %d \n", skubus.sisi);
+	printf("Volume \t\t : %d \n", skubus.volume);
+	printf("Luas Permukaan \t : %d \n", skubus.luaspermukaan);
+	
+	printf("\nKubus dengan Union\n");
+	ukubus.sisi = temp;
+	printf("Sisi \t\t : %d \n", ukubus.sisi);
+	ukubus.volume = volumekubus(ukubus.sisi);
+	printf("Volume \t\t : %d \n", ukubus.volume);
+	ukubus.sisi = temp;
+	ukubus.luaspermukaan = luaspermukaan(ukubus.sisi);	
+	printf("Luas Permukaan \t : %d \n", ukubus.luaspermukaan);
+	
+	
+	printf("\nUkuran memori pada kubus Struct\t: %d", sizeof(skubus));
+	printf("\nUkuran memori pada kubus Union\t: %d\n", sizeof(ukubus));
+	
+	ulangi();
+	
+	return 0;
+}
+
+void header(){
+	printf("=====================================================\n");
+ printf("|           PROGRAM MENGHITUNG GAJI HARIAN          |\n");
+ printf("|                     KELOMPOK 25                   |\n");
+ printf("=====================================================\n");
+ printf("| 2105551010 MARIA CHRISTINA HARTONO                |\n");
+ printf("| 2105551074 I MADE DWIKA DYANANDA KUMARA           |\n");
+ printf("| 2105551081 I GUSTI PUTU AGUNG WAHYU SENTANA PUTRA |\n");
+ printf("| 2105551134 ANAK AGUNG LINGGA PRATYAKSA NUGRAHA    |\n");
+ printf("| 2105551139 I GUSTI AGUNG BAGUS DHAMADI WIBAWA     |\n");
+ printf("| 2105551156 NI MADE RANTINI                        |\n");
+ printf("=====================================================\n");
+}
+
+int volumekubus (int s){
+	s = s * s *s;
+	
+	return s;
+}
+
+int luaspermukaan (int s){
+	s = s * s * 6;
+	
+	return s;
+}
+
+int verInput(int *var){
+   char buff[1024];
+   char check;
+
+   if (fgets(buff, sizeof(buff), stdin) !=NULL){
+    	if (sscanf(buff, "%d %c", var, &check) ==1){
+			return 1;
+		}
+   }
+     return 0;
+}
+
+void error(){
+	printf("Input Salah! Silahkan Input Ulang.\n");
+	printf("\n> ");
+}
+
+void ulangi(){
+    char pil[10];
+    
+	fflush(stdin);
+	printf ("\nIngin Kembali ke Program? (y/n) : "); 
+	scanf("%s", &pil);
+ 	
+	if(!strcmp(pil, "y") || !strcmp(pil, "Y")){
+		system("cls");
+		main();
+	}
+	else if(!strcmp(pil, "n") || !strcmp(pil, "N")){
+		printf("\nTerimakasih Telah Menggunakan Program Ini!");
+  		exit(0);
+	}  
+	else{
+		printf("Input Salah!\n");
+		ulangi();
+	}
+}
